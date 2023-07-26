@@ -7,7 +7,7 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
 
         public AlarmTest()
         {
-            ISensor stubSensor = new StubSensor();
+            ISensor fakeSensor = new FakeSensor();
         }
         
         [Fact]
@@ -24,7 +24,7 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
         public void Alarm_GoesOn_WhenPressureValue_LessThanLowPressureThreshold()
         {
             //Arrange
-            Alarm alarm = new Alarm(new StubSensor{NextPressurePsiValue = Alarm.LowPressureThreshold - 1});
+            Alarm alarm = new Alarm(new FakeSensor{NextPressurePsiValue = Alarm.LowPressureThreshold - 1});
             //Act
             alarm.Check();
             //Assert
@@ -35,7 +35,7 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
         public void Alarm_GoesOn_WhenPressureValue_HigherThanHighPressureThreshold()
         {
             //Arrange
-            Alarm alarm = new Alarm(new StubSensor{NextPressurePsiValue = Alarm.HighPressureThreshold + 1});
+            Alarm alarm = new Alarm(new FakeSensor{NextPressurePsiValue = Alarm.HighPressureThreshold + 1});
             //Act
             alarm.Check();
             //Assert
@@ -46,7 +46,7 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
         public void Alarm_StaysOff_WhenPressureValue_BetweenPressureThresholds()
         {
             //Arrange
-            Alarm alarm = new Alarm(new StubSensor{NextPressurePsiValue = Alarm.HighPressureThreshold - 1});
+            Alarm alarm = new Alarm(new FakeSensor{NextPressurePsiValue = Alarm.HighPressureThreshold - 1});
             //Act
             alarm.Check();
             //Assert
@@ -54,7 +54,7 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
         }
     }
 
-    public class StubSensor : ISensor
+    public class FakeSensor : ISensor
     {
         
         public double PopNextPressurePsiValue()
