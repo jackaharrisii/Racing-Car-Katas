@@ -26,7 +26,7 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
             //Arrange
             Alarm alarm = new Alarm(new FakeSensor{NextPressurePsiValue = Alarm.LowPressureThreshold - 1});
             //Act
-            alarm.Check();
+            alarm.CheckAndSetAlarm();
             //Assert
             Assert.True(alarm.AlarmOn);
         }
@@ -37,7 +37,7 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
             //Arrange
             Alarm alarm = new Alarm(new FakeSensor{NextPressurePsiValue = Alarm.HighPressureThreshold + 1});
             //Act
-            alarm.Check();
+            alarm.CheckAndSetAlarm();
             //Assert
             Assert.True(alarm.AlarmOn);
         }
@@ -48,10 +48,44 @@ namespace TDDMicroExercises.TirePressureMonitoringSystem
             //Arrange
             Alarm alarm = new Alarm(new FakeSensor{NextPressurePsiValue = Alarm.HighPressureThreshold - 1});
             //Act
-            alarm.Check();
+            alarm.CheckAndSetAlarm();
             //Assert
             Assert.False(alarm.AlarmOn);
         }
+        
+        [Fact]
+        public void AlarmNotSet_WhenFlagFalse_ForLowPressure()
+        {
+            //Arrange
+            Alarm alarm = new Alarm(new FakeSensor{NextPressurePsiValue = Alarm.LowPressureThreshold - 1});
+            //Act
+            alarm.CheckWithNoAlarm();
+            //Assert
+            Assert.False(alarm.AlarmOn);
+        }
+        
+        [Fact]
+        public void AlarmSet_WhenFlagTrue_ForLowPressure()
+        {
+            //Arrange
+            Alarm alarm = new Alarm(new FakeSensor{NextPressurePsiValue = Alarm.LowPressureThreshold - 1});
+            //Act
+            alarm.CheckAndSetAlarm();
+            //Assert
+            Assert.True(alarm.AlarmOn);
+        }
+        
+        [Fact]
+        public void AlarmNotSet_WhenFlagTrue_ForGoodPressure()
+        {
+            //Arrange
+            Alarm alarm = new Alarm(new FakeSensor{NextPressurePsiValue = Alarm.LowPressureThreshold + 1});
+            //Act
+            alarm.CheckAndSetAlarm();
+            //Assert
+            Assert.False(alarm.AlarmOn);
+        }
+        
     }
 
     public class FakeSensor : ISensor

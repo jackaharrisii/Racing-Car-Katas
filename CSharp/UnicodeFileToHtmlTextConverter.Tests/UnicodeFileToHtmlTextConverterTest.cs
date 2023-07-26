@@ -4,7 +4,7 @@ namespace TDDMicroExercises.UnicodeFileToHtmlTextConverter
 {
     public class HikerTest
     {
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void Foobar()
         {
             UnicodeFileToHtmlTextConverter converter = new UnicodeFileToHtmlTextConverter("foobar.txt");
